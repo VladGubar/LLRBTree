@@ -12,21 +12,45 @@ public class RBTree<K extends Comparable<K>, V> implements MapInterface<K, V> {
             Red,
             Black;
         }
+        Color color;
     
     
-        public Node(K key, V value, enum Color) {
+        public Node(K key, V value, Color color) {
                 this.key = key;
                 this.value = value;
-                this.Color = Color;
+                this.color = color;
+             }
+        
+        public Node(K key, V value) {
+                this.key = key;
+                this.value = value;
+                color = Color.Red;
              }
     }
     
     private Node<K, V> root;
-    private int size;
+    private Node<K, V> nil; 
+    public int size;
     
     public RBTree () {
         size = 0;
-        root = null;
+        nil = new Node(null, null, Node.Color.Black);
+        root = nil;
+    }
+    
+    private Node<K, V> add(Node<K, V> node, K key,  V value) {
+        if (root == nil) {
+            root.key = key;
+            root.value = value;
+            size++;
+        }
+        if (key.compareTo(node.key)  < 0) {
+            root.leftChild = add(node, key, value);
+        }
+        else if (key.compareTo(node.key) > 0) {
+            root.rightChild = add(node, key, value);
+        }
+        return node;
     }
     
     @Override
