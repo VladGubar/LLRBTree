@@ -47,14 +47,14 @@ public class RBTree<K extends Comparable<K>, V> implements MapInterface<K, V> {
             size++;
         }
         if (key.compareTo(node.key)  < 0) {
-            root.leftChild = add(node, key, value);
+            node.leftChild = add(node, key, value);
         }
         else if (key.compareTo(node.key) > 0) {
-            root.rightChild = add(node, key, value);
+            node.rightChild = add(node, key, value);
         }
         return node;
     }
-    
+      
     @Override
     public void setValue(K key, V value) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
