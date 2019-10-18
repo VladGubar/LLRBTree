@@ -39,9 +39,11 @@ public class RBTree<K extends Comparable<K>, V> implements MapInterface<K, V> {
     }
     
     private Node<K, V> add(Node<K, V> node, K key,  V value) {
-        if (root == nil) {
-            root.key = key;
-            root.value = value;
+        if (node == nil) {
+            node.key = key;
+            node.value = value;
+            node.leftChild = nil;
+            node.rightChild = nil;
             size++;
         }
         if (key.compareTo(node.key)  < 0) {
