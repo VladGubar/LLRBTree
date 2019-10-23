@@ -1,7 +1,11 @@
 package rbt;
 
 public class RBTree<K extends Comparable<K>, V> implements MapInterface<K, V> {
-
+    
+        public Node<K, V> getRoot() {
+            return root;
+        }
+    
     static class Node<K, V> {
 
         K key;
@@ -42,10 +46,10 @@ public class RBTree<K extends Comparable<K>, V> implements MapInterface<K, V> {
 
     private Node<K, V> root;
     private Node<K, V> nil;
-    public int size;
+    //public int size;
 
     public RBTree() {
-        size = 0;
+        //size = 0;
         nil = new Node(null, null, Node.Color.Black);
         root = nil;
     }
@@ -56,7 +60,7 @@ public class RBTree<K extends Comparable<K>, V> implements MapInterface<K, V> {
             node.value = value;
             node.leftChild = nil;
             node.rightChild = nil;
-            size++;
+            //size++;
         }
         if (key.compareTo(node.key) < 0) {
             node.leftChild = add(node.leftChild, key, value);
@@ -107,29 +111,43 @@ public class RBTree<K extends Comparable<K>, V> implements MapInterface<K, V> {
     }
 
     private Node<K, V> findKey(Node<K, V> node, K key) {
-        if(node == nil) { return null; }
-        if(key.compareTo(node.key) > 0) {
-             return findKey(node.rightChild, key);
+        if (node == nil) {
+            return null;
         }
-        else if(key.compareTo(node.key) < 0) {
-             return findKey(node.leftChild, key);
+        if (key.compareTo(node.key) > 0) {
+            return findKey(node.rightChild, key);
+        } else if (key.compareTo(node.key) < 0) {
+            return findKey(node.leftChild, key);
+        } else {
+            return node;
         }
-        else return node;
     }
-
+    
     @Override
     public void setValue(K key, V value) {
-        if(findKey(root, key) == null) {
-            root = add(root, key, value);
+        if (key == null || value == null) {
+            throw new NullArgumentException("Cannot set null arguments");
         }
-        else {
+        if (findKey(root, key) == null) {
+            root = add(root, key, value);
+        } else {
             findKey(root, key).value = value;
         }
     }
 
     @Override
     public V getValue(K key) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return findKey(root, key).value;
+    }
+}
+
+class NullArgumentException extends RuntimeException {
+
+    public NullArgumentException() {
+        super();
     }
 
+    public NullArgumentException(String message) {
+        super(message);
+    }
 }
