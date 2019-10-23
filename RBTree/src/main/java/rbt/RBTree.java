@@ -8,7 +8,6 @@ public class RBTree<K extends Comparable<K>, V> implements MapInterface<K, V> {
         V value;
         Node<K, V> leftChild;
         Node<K, V> rightChild;
-        Node<K, V> parent;
 
         public enum Color {
             Red,
@@ -35,6 +34,10 @@ public class RBTree<K extends Comparable<K>, V> implements MapInterface<K, V> {
         private void colorBlack() {
             color = Node.Color.Black;
         }
+
+        private boolean isRed() {
+            return color == Node.Color.Red;
+        }
     }
 
     private Node<K, V> root;
@@ -56,24 +59,22 @@ public class RBTree<K extends Comparable<K>, V> implements MapInterface<K, V> {
             size++;
         }
         if (key.compareTo(node.key) < 0) {
-            node.leftChild = add(node, key, value);
-            node.leftChild.parent = node;
+            node.leftChild = add(node.leftChild, key, value);
         } else if (key.compareTo(node.key) > 0) {
-            node.rightChild = add(node, key, value);
-            node.rightChild.parent = node;
+            node.rightChild = add(node.rightChild, key, value);
         }
         treeReorganize(node);
         return node;
     }
 
     private void treeReorganize(Node node) {
-        if (node.leftChild.color == Node.Color.Red && node.leftChild.rightChild.color == Node.Color.Red) {
+        if (node.leftChild.isRed() && node.leftChild.rightChild.isRed()) {
             node = rotateLeft(node);
         }
-        if (node.leftChild.color == Node.Color.Red && node.leftChild.leftChild.color == Node.Color.Red) {
+        if (node.leftChild.isRed() && node.leftChild.leftChild.isRed()) {
             node = rotateRight(node);
         }
-        if (node.rightChild.color == Node.Color.Red && node.leftChild.color == Node.Color.Red) {
+        if (node.rightChild.isRed() && node.leftChild.isRed()) {
             node = paintNodes(node);
         }
     }
@@ -84,8 +85,6 @@ public class RBTree<K extends Comparable<K>, V> implements MapInterface<K, V> {
         node.leftChild = b;
         c.leftChild = b;
         b.rightChild = nil;
-        b.parent = c;
-        c.parent = node;
         return node;
     }
 
@@ -107,9 +106,25 @@ public class RBTree<K extends Comparable<K>, V> implements MapInterface<K, V> {
         return node;
     }
 
+    private Node<K, V> findKey(Node<K, V> node, K key) {
+        if(node == nil) { return null; }
+        if(key.compareTo(node.key) > 0) {
+             return findKey(node.rightChild, key);
+        }
+        else if(key.compareTo(node.key) < 0) {
+             return findKey(node.leftChild, key);
+        }
+        else return node;
+    }
+
     @Override
     public void setValue(K key, V value) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if(findKey(root, key) == null) {
+            root = add(root, key, value);
+        }
+        else {
+            findKey(root, key).value = value;
+        }
     }
 
     @Override
