@@ -64,11 +64,13 @@ public class RBTree<K extends Comparable<K>, V> implements MapInterface<K, V> {
     }
 
     private Node<K, V> treeReorganize(Node node) {
-        if (node.leftChild.isRed() && node.leftChild.rightChild.isRed()) {
-            node = rotateLeft(node);
+        if (node.rightChild.isRed() && !node.leftChild.isRed()) {
+           node = rotateLeft(node);
+           swapColors(node, node.leftChild);
         }
-        if (node.leftChild.isRed() && node.leftChild.leftChild.isRed()) {
+        if(node.leftChild.isRed() && node.leftChild.leftChild.isRed()) {
             node = rotateRight(node);
+           swapColors(node, node.rightChild);
         }
         if (node.rightChild.isRed() && node.leftChild.isRed()) {
             node = paintNodes(node);
@@ -77,28 +79,31 @@ public class RBTree<K extends Comparable<K>, V> implements MapInterface<K, V> {
     }
 
     private Node<K, V> rotateLeft(Node node) {
-        Node<K, V> b = node.leftChild;
-        Node<K, V> c = node.leftChild.rightChild;
-        node.leftChild = c;
-        c.leftChild = b;
-        b.rightChild = nil;
-        return node;
+        Node<K, V> child = node.rightChild;
+        Node<K, V> childLeft = child.leftChild;
+        child.leftChild = node;
+        node.rightChild = childLeft;
+        //if (node == root) {
+          //  child.colorBlack();
+           // root = child;
+        //}
+        return child;
     }
 
     private Node<K, V> rotateRight(Node node) {
-        Node<K, V> c = node.leftChild;
-        node.leftChild = nil;
-        c.rightChild = node;
-        c.colorBlack();
-        node.colorRed();
-        if (node == root) {
-            root = c;
-        }
-        return c;
+        Node<K, V> child = node.leftChild;
+        Node<K, V> childRight = child.rightChild;
+        child.rightChild = node;
+        node.leftChild = childRight;
+       // if (node == root) {
+         //   child.colorBlack();
+         //   root = child;
+        //}
+        return child;
     }
 
     private Node<K, V> paintNodes(Node node) {
-        if (root != node) {
+        if(node != root) {
             node.colorRed();
         }
         node.leftChild.colorBlack();
@@ -118,6 +123,12 @@ public class RBTree<K extends Comparable<K>, V> implements MapInterface<K, V> {
             return node;
         }
     }
+    
+    public void swapColors(Node<K, V> node1, Node<K, V> node2) {
+        Node.Color tmp = node1.color;
+        node1.color = node2.color;
+        node2.color = tmp;
+    }
 
     public Node<K, V> getRoot() {
         return root;
@@ -130,8 +141,10 @@ public class RBTree<K extends Comparable<K>, V> implements MapInterface<K, V> {
         }
         if (findKey(root, key) == null) {
             root = add(root, key, value);
+            root.colorBlack();
         } else {
             findKey(root, key).value = value;
+            root = treeReorganize(root);
         }
     }
 

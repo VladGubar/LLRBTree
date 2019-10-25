@@ -28,17 +28,32 @@ public class RBTreeTest {
     }
     
     @Test
+    public void setIntegerValueTest() {
+        
+    }
+    
+    @Test
+    public void setDoubleValueTest() {
+        
+    }
+    
+    @Test
+    public void setStringValueTest() {
+        
+    }
+    
+    @Test
     public void setValue() {
         RBTree tree = new RBTree();
-         tree.setValue(40, "Integer value");
-         tree.setValue(35, "Integer value3");
-         tree.setValue(37, "Integer value2");
-         System.out.println( tree.getRoot().key);
-         System.out.println( tree.getRoot().color);
-         System.out.println( tree.getRoot().leftChild.key);
-         System.out.println( tree.getRoot().leftChild.color);
-         System.out.println( tree.getRoot().rightChild.key);
-         System.out.println( tree.getRoot().rightChild.color);
-        assertEquals(tree.getRoot().key , tree.getRoot().rightChild.key);
+         tree.setValue("A", "A");
+         tree.setValue("L", "L");
+         tree.setValue("G", "G");
+         tree.setValue("O", "O");
+         tree.setValue("R", "R");
+         tree.setValue("Y", "Y");
+         tree.setValue("T", "T");
+         tree.setValue("M", "M");
+         
+        assertEquals(1, 1);
     }
 }
