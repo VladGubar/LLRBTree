@@ -35,7 +35,7 @@ public class RBTree<K extends Comparable<K>, V> implements MapInterface<K, V> {
             color = Node.Color.Black;
         }
 
-        private boolean isRed() {
+        public boolean isRed() {
             return color == Node.Color.Red;
         }
     }
