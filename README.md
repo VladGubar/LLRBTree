@@ -21,23 +21,45 @@ Tree class(RBTree.class) contains separate Node class that represents:
 * Right child(right node)
 * Node color(enumerated type)
   
-  1. If tree is empty, adeed node must be a root.
-  2*. If tree is not empty, put the element in the right place (comparing the node key with other keys already stored in the tree)
-  3. After adding an element, reorganize the tree.
+1. If tree is empty, adeed node must be a root.
+2*. If tree is not empty, put the element in the right place (comparing the node key with other keys already stored in the tree)
+3. After adding an element, reorganize the tree.
   
-  *Insertions in the LLRB is exactly like inserting into a Binary search tree. Adding an element is implemented using recursion
+*Insertions in the LLRB is exactly like inserting into a Binary search tree. Adding an element is implemented using recursion
   
   ### Reorganization rules:
   #### 1 CASE:
-  ```java
-  /* 
+  If the RIGHT child of the node is RED and LEFT child is BLACK (NIL is also BLACK), then do LEFT rotation and swap colors of the node and it's left child (according to the rule #6).
+  ```
                         |                                                 |
                         A                 left rotation                   B
                       /   \\         ---------------------->           //   \
                    (n)      B                                         A     (n)
                           /   \                                     /   \
                        (n*)    (n)                               (n)    (n*)
-     */
 ```
+  #### 2 CASE:
+  If the LEFT child of the node is RED and LEFT grandchild is also RED, then do RIGHT rotation and swap color of the node and it's right child (according to the rule #6)
+  ```
+                        |                                                 |
+                        C                 right rotation                  B
+                      //  \          ---------------------->            //  \\
+                     B    (n)                                          A      C
+                   //  \                                             /   \  /   \
+                  A    (n)                                         (n)  (n)(n)  (n)
+                /   \
+              (n)   (n)
+```
+  #### 3 CASE:
+  If the LEFT child of the node is RED and RIGHT child is also RED, then invert colors of all nodes(exception: if node is root, it's stay in BLACK color).
+  ```
+                        |                                                  |
+                        B                  colorization                    B
+                      // \\          ---------------------->             /   \
+                     A     C                                            A     C
+                   /   \  /  \                                        /   \  /  \
+                 (n)  (n)(n) (n)                                    (n)  (n)(n) (n)
+```
+
 ![Test images](https://github.com/VladGubar/LLRBTree/raw/master/RBTree/setTest.png)
 ![Test images](https://github.com/VladGubar/LLRBTree/raw/master/RBTree/getTest.png)
