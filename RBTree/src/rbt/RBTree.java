@@ -65,12 +65,12 @@ public class RBTree<K extends Comparable<K>, V> implements MapInterface<K, V> {
 
     private Node<K, V> treeReorganize(Node node) {
         if (node.rightChild.isRed() && !node.leftChild.isRed()) {
-           node = rotateLeft(node);
-           swapColors(node, node.leftChild);
+            node = rotateLeft(node);
+            swapColors(node, node.leftChild);
         }
-        if(node.leftChild.isRed() && node.leftChild.leftChild.isRed()) {
+        if (node.leftChild.isRed() && node.leftChild.leftChild.isRed()) {
             node = rotateRight(node);
-           swapColors(node, node.rightChild);
+            swapColors(node, node.rightChild);
         }
         if (node.rightChild.isRed() && node.leftChild.isRed()) {
             node = paintNodes(node);
@@ -83,10 +83,6 @@ public class RBTree<K extends Comparable<K>, V> implements MapInterface<K, V> {
         Node<K, V> childLeft = child.leftChild;
         child.leftChild = node;
         node.rightChild = childLeft;
-        //if (node == root) {
-          //  child.colorBlack();
-           // root = child;
-        //}
         return child;
     }
 
@@ -95,15 +91,11 @@ public class RBTree<K extends Comparable<K>, V> implements MapInterface<K, V> {
         Node<K, V> childRight = child.rightChild;
         child.rightChild = node;
         node.leftChild = childRight;
-       // if (node == root) {
-         //   child.colorBlack();
-         //   root = child;
-        //}
         return child;
     }
 
     private Node<K, V> paintNodes(Node node) {
-        if(node != root) {
+        if (node != root) {
             node.colorRed();
         }
         node.leftChild.colorBlack();
@@ -123,7 +115,7 @@ public class RBTree<K extends Comparable<K>, V> implements MapInterface<K, V> {
             return node;
         }
     }
-    
+
     public void swapColors(Node<K, V> node1, Node<K, V> node2) {
         Node.Color tmp = node1.color;
         node1.color = node2.color;
@@ -136,7 +128,7 @@ public class RBTree<K extends Comparable<K>, V> implements MapInterface<K, V> {
 
     @Override
     public void setValue(K key, V value) {
-        if (key == null || value == null) {
+        if (key == null) {
             throw new NullArgumentException("Cannot set null arguments");
         }
         if (findKey(root, key) == null) {

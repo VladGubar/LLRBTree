@@ -1,5 +1,6 @@
 package rbt;
 
+import java.io.FileNotFoundException;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -12,12 +13,6 @@ public class RBTreeTest {
     public void should_throwNullArgumentException_when_null_key() {
         RBTree tree = new RBTree();
         tree.setValue(null, "Must be an exception");
-    }
-
-    @Test(expected = NullArgumentException.class)
-    public void should_throwNullArgumentException_when_null_value() {
-        RBTree tree = new RBTree();
-        tree.setValue(0, null);
     }
 
     @Test
@@ -71,22 +66,23 @@ public class RBTreeTest {
     @Test
     public void leftRotationTest() {
         RBTree tree = new RBTree();
-        tree.setValue("A",  "I will be a left child with red color after left rotation");
+        tree.setValue("A", "I will be a left child with red color after left rotation");
         tree.setValue("B", "I will be a root with black color after left rotation");
         assertEquals("B", tree.getRoot().key);
         assertEquals("A", tree.getRoot().leftChild.key);
         assertEquals(false, tree.getRoot().isRed());
         assertNotEquals(tree.getRoot().color, tree.getRoot().leftChild.color);
     }
-        /* 
+
+    /* 
                                              |                                                                 |
                                             A                 left rotation                   B
                                           /   \\         ---------------------->           //    \
                                        (n)     B                                                    A       (n)
                                                 /   \                                               /    \
                                           (n*)    (n)                                      (n)    (n*)
-        */
-    
+     */
+
     @Test
     public void rightRotation_and_colorization_test() {
         RBTree tree = new RBTree();
@@ -100,7 +96,7 @@ public class RBTreeTest {
         assertEquals(tree.getRoot().color, tree.getRoot().leftChild.color);
         assertEquals(tree.getRoot().color, tree.getRoot().rightChild.color);
     }
-    
+
     /*
                                              |                                                                 |
                                             C              right rotation                    B
@@ -123,7 +119,31 @@ public class RBTreeTest {
                                                                       /   \    /  \                                          
                                                                  (n)  (n)(n)  (n)   
     
-    */
+     */
     
+    @Test
+    public void testingTest() throws FileNotFoundException {
+        int k = 3000; //Optimal number of elements for plotting
+        TestingClass test = new TestingClass();
+        test.testingSetAndGet(k); 
+    }
     
+    @Test
+    public void treeAndArrayTest() throws FileNotFoundException {
+        TestingClass test = new TestingClass();
+        test.testingMapAndArray(200, "test1.txt");
+        test.testingMapAndArray(400, "test2.txt");
+        test.testingMapAndArray(600, "test3.txt");
+        test.testingMapAndArray(800, "test4.txt");
+        test.testingMapAndArray(1000, "test5.txt");
+        test.testingMapAndArray(5000, "test6.txt");
+        test.testingMapAndArray(10000, "test7.txt");
+        test.testingMapAndArray(50000, "test8.txt");
+        test.testingMapAndArray(100000, "test9.txt");
+        test.testingMapAndArray(200000, "test10.txt");
+        test.testingMapAndArray(400000, "test11.txt");
+        test.testingMapAndArray(600000, "test12.txt");
+        test.testingMapAndArray(800000, "test13.txt");
+        test.testingMapAndArray(1000000, "test14.txt");
+    }
 }
