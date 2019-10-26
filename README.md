@@ -1,5 +1,4 @@
 # LLRBTree
-___
 Map implementation using self-implemented Left-Leaning Red-Black Tree that allows to search value about any type of data based on the key implementing the Comparable interafce. A left leaning Red Black Tree or (LLRB), is a variant of red black tree, which is easier to implement than Red Black Tree itself and guarantees all the search, delete and insert operations in O(log n) time.
 ___
 
@@ -78,5 +77,8 @@ ___
 ## Tests
 I did tests to study the time of insertion depending on the number of elements.
 ![SetValueTest](https://github.com/VladGubar/LLRBTree/raw/master/RBTree/setTest.png)
+___
 I also did tests to study the time of searching for elements by their key depending on the number of elements
 ![GetValueTest](https://github.com/VladGubar/LLRBTree/raw/master/RBTree/getTest.png)
+___
+Analyzing the above diagrams, we can conclude that LLRBT is slower with small amounts of elements, but with large amounts of data dependence becomes logarithmic.
