@@ -6,9 +6,6 @@ import static org.junit.Assert.*;
 
 public class RBTreeTest {
 
-    public RBTreeTest() {
-    }
-
     @Test(expected = NullArgumentException.class)
     public void should_throwNullArgumentException_when_null_key() {
         RBTree tree = new RBTree();

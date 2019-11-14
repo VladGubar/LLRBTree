@@ -40,11 +40,11 @@ public class TestingClass {
 
     public void testingMapAndArray(int k, String name) {
         RBTree tree = new RBTree();
-        Integer[] a = new Integer[k];
+        Integer[] arr = new Integer[k];
         int x = k;
         for (; k > 0; k--) {
             tree.setValue(k, "Element");
-            a[x - k] = k;
+            arr[x - k] = k;
         }
         try {
             BufferedWriter writer = new BufferedWriter(new FileWriter(name));
@@ -54,7 +54,7 @@ public class TestingClass {
             writer.write(Long.toString(nano_endTime - nano_startTime));
             writer.newLine();
             nano_startTime = System.nanoTime();
-            for (int i = 0; i < a.length; i++) {
+            for (int i = 0; i < arr.length; i++) {
                 if (a[i] == 1) {
                     break;
                 }

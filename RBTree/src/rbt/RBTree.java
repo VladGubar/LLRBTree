@@ -136,7 +136,6 @@ public class RBTree<K extends Comparable<K>, V> implements MapInterface<K, V> {
             root.colorBlack();
         } else {
             findKey(root, key).value = value;
-            root = treeReorganize(root);
         }
     }
 
